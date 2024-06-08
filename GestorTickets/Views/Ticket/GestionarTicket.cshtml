@@ -11,9 +11,7 @@
 }
 
 @section Estilos {
-    <!-- ============================================================
-    =ESTILOS PARA ESTA PAGINA
-    ===============================================================-->
+
     <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
@@ -26,7 +24,15 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm-3">
-                <button class="btn btn-success" data-toggle="modal" data-target="#modalData"><i class="fas fa-plus-circle"></i> Nuevo Ticket</button>
+                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalData">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalData2">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                @* <button class="btn btn-danger btn-sm">
+                    <i class="fas fa-trash-alt"></i>
+                </button> *@
             </div>
         </div>
         <hr />
@@ -35,6 +41,7 @@
                 <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Aplicación o Servicio</th>
                             <th>Descripcion</th>
                             <th>Categoria</th>
@@ -43,33 +50,14 @@
                             <th>Estado</th>
                             <th>Fecha</th>
                             <th>Prioridad</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @* <tr>
-                        <td>1</td>
-                        <td>Equipo defectuoso</td>
-                        <td>El equipo presenta problemas</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <th>23/4/2024</th>
-                        <td><span class="badge badge-info">Activo</span></td>
-                        <td>
-                        <button class="btn btn-primary btn-sm">
-                        <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i>
-                        </button>
-                        </td>
-                        </tr> *@
 
                         @foreach (var Tickets in (IEnumerable<dynamic>)ViewData["listadoDeTickets"])
                         {
                             <tr>
+                                <th>@Tickets.ID</th>
                                 <td>@Tickets.Nombre</td>
                                 <td>@Tickets.Descripcion</td>
                                 <td>@Tickets.CategoriaNombre</td>
@@ -78,14 +66,6 @@
                                 <td>@Tickets.EstadoNombre</td>
                                 <td>Fecha</td>
                                 <td>@Tickets.PrioridadNombre</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
                             </tr>
                         }
                     </tbody>
@@ -94,6 +74,7 @@
         </div>
     </div>
 </div>
+
 
 <!--  Modal-->
 <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
@@ -108,15 +89,57 @@
             <div class="modal-body">
 
                 <!--  Formulario-->
-                <form asp-action="CrearTicket">
+                <form asp-action="EliminarTicket">
                     <input type="hidden" value="0" id="txtId">
                     <div class="row">
                         <div class="col-sm-8">
+
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label for="txtNombre">Nombre</label>
-                                    @Html.TextBox("Nombre", "", new { @class = "form-control" })
+                                    <label for="cboTicket">ID del Ticket</label>
+                                    @Html.DropDownList("IdTicket", ViewData["listadoDeTicket1"] as SelectList, "Seleccione un ticket", new { @class = "form-control" })
+                                </div>       
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Eliminar" />
+                                    <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
                                 </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--  Modal 2-->
+<div class="modal fade" id="modalData2" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Detalle del Ticket</h6>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!--  Formulario-->
+                <form asp-action="ModificarTicket">
+                    <input type="hidden" value="0" id="txtId">
+                    <div class="row">
+                        <div class="col-sm-8">
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="cboTicket">ID del Ticket</label>
+                                    @Html.DropDownList("IdTicket", ViewData["listadoDeTicket1"] as SelectList, "Seleccione un ticket", new { @class = "form-control" })
+                                </div>                                                                
                                 <div class="form-group col-sm-6">
                                     <label for="cboCategoria">Categoria</label>
                                     @Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList, "Seleccione una categoria", new { @class = "form-control" })
@@ -154,18 +177,10 @@
                                     <input class="form-control-file" type="file" id="txtImagen" />
                                 </div>
                             </div>
-                            @* <div class="form-row">
-                            <div class="form-group col-sm-6">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-4">
-                            <input type="submit" class="btn btn-primary btn-sm" value="Guardar"/>
-                            </div>
-                            </div>
-                            </div> *@
 
                             <div class="modal-footer">
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary btn-sm" value="Guardar" />
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Actualizar" />
                                     <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
@@ -175,18 +190,13 @@
                     </div>
                 </form>
             </div>
-            @* <div class="modal-footer">
-            <button class="btn btn-primary btn-sm" type="button" id="btnGuardar">Guardar</button>
-            <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
-            </div> *@
+
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <!-- ============================================================
-    =SCRIPTS PARA ESTA PAGINA
-    ===============================================================-->
+
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
@@ -197,6 +207,5 @@
     <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
     <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
 
-    <!-- SOLO ES DE EJEMPLO - IGNORAR -->
     <script src="js/vistas/datatables-demo.js"></script>
 }

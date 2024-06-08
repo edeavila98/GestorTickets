@@ -40,9 +40,7 @@
                                     <tbody> 
                                         @foreach (var Tickets in (IEnumerable<dynamic>)ViewData["listadoDeTickets"])
                                         {
-                                            if(Tickets.IdUsuario == ViewBag.IdUsuario)
-                                            {
-                                                <tr>
+                                            <tr>
                                                 <td>@Tickets.Nombre</td>
                                                 <td>@Tickets.Descripcion</td>
                                                 <td>@Tickets.CategoriaNombre</td>
@@ -51,8 +49,7 @@
                                                 <td>@Tickets.EstadoNombre</td>
                                                 <td>Fecha</td>                                               
                                                 <td>@Tickets.PrioridadNombre</td>
-                                                </tr>
-                                            }                                          
+                                            </tr>                                        
                                         }
                                     </tbody>
                                 </table>
@@ -74,45 +71,33 @@
                 <div class="modal-body">
 
                 <!--  Formulario-->
-                    <form asp-action="CrearTicket">
+                    <form asp-action="AsignarTarea">
                         <input type="hidden" value="0" id="txtId">
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="form-row">
-                                        <div class="form-group col-sm-6">
-                                            <label for="txtNombre">Nombre</label>
-                                            @Html.TextBox("Nombre","",new {@class="form-control"})
-                                        </div>
-                                        <div class="form-group col-sm-6">
-                                            <label for="cboCategoria">Categoria</label>
-                                            @Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList,"Seleccione una categoria",new {@class="form-control"})
-                                        </div>
-                                </div>
-                                <div class="form-row">
+                                @* <div class="form-row">
                                         <div class="form-group col-sm-12">
                                             <label for="txtDescripcion">Descripcion</label>
-                                            @Html.TextArea("Descripcion","",new{@class="form-control",@placeHolder="Ingrese la descripción"})
+                                            @Html.TextArea("Comentario","",new{@class="form-control",@placeHolder="Ingrese un comentario"})
                                         </div>
-                                </div>
+                                </div> *@
+                                
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">
-                                        <label for="cboEmpleado">Empleado</label>
+                                        <label for="cboTicket">Nombre del Ticket</label>
+                                        @Html.DropDownList("IdTicket", ViewData["listadoDeTickt"] as SelectList,"Seleccione un ticket",new {@class="form-control"})
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="cboEmpleado">Asignar a Empleado:</label>
                                         @Html.DropDownList("IdEmpleado", ViewData["listadoDeEmpleados"] as SelectList,"Seleccione un empleado",new {@class="form-control"})
                                     </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboCliente">Cliente</label>
-                                         @Html.DropDownList("IdCliente", ViewData["listadoDeClientes"] as SelectList,"Seleccione un cliente",new {@class="form-control"})
-                                    </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboPrioridad">Prioridad</label>
-                                        @Html.DropDownList("IdPrioridad", ViewData["listadoDePrioridad"] as SelectList,"Seleccione una prioridad",new {@class="form-control"})
-                                    </div>
-                                    <div class="form-group col-sm-6">
+                                 <div class="form-row">
+                                      <div class="form-group col-sm-6">
                                         <label for="cboEstado">Estado</label>
-                                    @Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
+                                        @Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
                                     </div>
+                                    
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-sm-6">

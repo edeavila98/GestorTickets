@@ -1,162 +1,161 @@
-﻿
-@{
-    ViewData["Title"] = "Crear Ticket";
-    if (ViewBag.IdRol == 1)
-    {
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    else
-    {
-        Layout = "~/Views/Shared/_LayoutCliente.cshtml";
-    }
+﻿@{
+	ViewData["Title"] = "Crear Ticket";
+	if (ViewBag.IdRol == 1)
+	{
+		Layout = "~/Views/Shared/_Layout.cshtml";
+	}
+	else
+	{
+		Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+	}
 }
 
-@section Estilos{
+@section Estilos {
 
-    <link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
+	<link rel="stylesheet" href="~/vendor/datatables/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="~/vendor/datatables/extensiones/css/responsive.dataTables.min.css">
+	<link rel="stylesheet" href="~/vendor/datatables/extensiones/css/buttons.dataTables.min.css">
 }
 
 <div class="card shadow mb-4">
-                <div class="card-header py-3 bg-second-primary">
-                    <h6 class="m-0 font-weight-bold text-white">Lista de Tickets</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#modalData"><i class="fas fa-plus-circle"></i> Nuevo Ticket</button>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div class="row">
-                        <div class="col-sm-12">
-                                <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Aplicación o Servicio</th>
-                                            <th>Descripcion</th>
-                                            <th>Categoria</th>
-                                            <th>Empleado</th>
-                                            <th>Cliente</th>
-                                            <th>Estado</th>
-                                            <th>Fecha</th>
-                                            <th>Prioridad</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        @foreach (var Tickets in (IEnumerable<dynamic>)ViewData["listadoDeTickets"])
-                                        {
-                                            if(Tickets.IdUsuario == ViewBag.IdUsuario)
-                                            {
-                                                <tr>
-                                                <td>@Tickets.Nombre</td>
-                                                <td>@Tickets.Descripcion</td>
-                                                <td>@Tickets.CategoriaNombre</td>
-                                                <td>@Tickets.EmpleadoNombre</td>
-                                                <td>@Tickets.ClienteNombre</td>
-                                                <td>@Tickets.EstadoNombre</td>
-                                                <td>Fecha</td>                                               
-                                                <td>@Tickets.PrioridadNombre</td>
-                                                </tr>
-                                            }                                          
-                                        }
-                                    </tbody>
-                                </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+	<div class="card-header py-3 bg-second-primary">
+		<h6 class="m-0 font-weight-bold text-white">Lista de Tickets</h6>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-sm-3">
+				<button class="btn btn-success" data-toggle="modal" data-target="#modalData"><i class="fas fa-plus-circle"></i> Nuevo Ticket</button>
+			</div>
+		</div>
+		<hr />
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
+					<thead>
+						<tr>
+							<th>Aplicación o Servicio</th>
+							<th>Descripcion</th>
+							<th>Categoria</th>
+							<th>Empleado</th>
+							<th>Cliente</th>
+							<th>Estado</th>
+							<th>Fecha</th>
+							<th>Prioridad</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var Tickets in (IEnumerable<dynamic>)ViewData["listadoDeTickets"])
+						{
+							if (Tickets.IdUsuario == ViewBag.IdUsuario)
+							{
+								<tr>
+									<td>@Tickets.Nombre</td>
+									<td>@Tickets.Descripcion</td>
+									<td>@Tickets.CategoriaNombre</td>
+									<td>@Tickets.EmpleadoNombre</td>
+									<td>@Tickets.ClienteNombre</td>
+									<td>@Tickets.EstadoNombre</td>
+									<td>Fecha</td>
+									<td>@Tickets.PrioridadNombre</td>
+								</tr>
+							}
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <!--  Modal-->
-    <div class="modal fade" id="modalData" tabindex="-1" role="dialog"aria-hidden="true" data-backdrop="static">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6>Detalle del Ticket</h6>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+<!--  Modal-->
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6>Detalle del Ticket</h6>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
 
-                <!--  Formulario-->
-                    <form asp-action="CrearTicket">
-                        <input type="hidden" value="0" id="txtId">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="form-row">
-                                        <div class="form-group col-sm-6">
-                                            <label for="txtNombre">Nombre</label>
-                                            @Html.TextBox("Nombre","",new {@class="form-control"})
-                                        </div>
-                                        <div class="form-group col-sm-6">
-                                            <label for="cboCategoria">Categoria</label>
-                                            @Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList,"Seleccione una categoria",new {@class="form-control"})
-                                        </div>
-                                </div>
-                                <div class="form-row">
-                                        <div class="form-group col-sm-12">
-                                            <label for="txtDescripcion">Descripcion</label>
-                                            @Html.TextArea("Descripcion","",new{@class="form-control",@placeHolder="Ingrese la descripción"})
-                                        </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboEmpleado">Empleado</label>
-                                        @Html.DropDownList("IdEmpleado", ViewData["listadoDeEmpleados"] as SelectList,"Seleccione un empleado",new {@class="form-control"})
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboCliente">Cliente</label>
-                                         @Html.DropDownList("IdCliente", ViewData["listadoDeClientes"] as SelectList,"Seleccione un cliente",new {@class="form-control"})
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboPrioridad">Prioridad</label>
-                                        @Html.DropDownList("IdPrioridad", ViewData["listadoDePrioridad"] as SelectList,"Seleccione una prioridad",new {@class="form-control"})
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="cboEstado">Estado</label>
-                                    @Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="txtImagen">Imagen</label>
-                                        <input class="form-control-file" type="file" id="txtImagen"/>
-                                    </div>
-                                </div>
+				<!--  Formulario-->
+				<form asp-action="CrearTicket">
+					<input type="hidden" value="0" id="txtId">
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-row">
+								<div class="form-group col-sm-6">
+									<label for="txtNombre">Nombre</label>
+									@Html.TextBox("Nombre", "", new { @class = "form-control" })
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="cboCategoria">Categoria</label>
+									@Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList, "Seleccione una categoria", new { @class = "form-control" })
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-sm-12">
+									<label for="txtDescripcion">Descripcion</label>
+									@Html.TextArea("Descripcion", "", new { @class = "form-control", @placeHolder = "Ingrese la descripción" })
+								</div>
+							</div>
+							<div class="form-row">
+								 <div class="form-group col-sm-6">
+									<label for="cboEmpleado">Empleado</label>
+									@Html.DropDownList("IdEmpleado", ViewData["listadoDeEmpleados"] as SelectList,"Seleccione un empleado",new {@class="form-control"})
+								</div> 
+								<div class="form-group col-sm-6">
+									<label for="cboCliente">Cliente</label>
+									@Html.DropDownList("IdCliente", ViewData["listadoDeClientes"] as SelectList, "Seleccione un cliente", new { @class = "form-control" })
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-sm-6">
+									<label for="cboPrioridad">Prioridad</label>
+									@Html.DropDownList("IdPrioridad", ViewData["listadoDePrioridad"] as SelectList, "Seleccione una prioridad", new { @class = "form-control" })
+								</div>
+								@* <div class="form-group col-sm-6">
+								<label for="cboEstado">Estado</label>
+								@Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
+								</div> *@
+							</div>
+							<div class="form-row">
+								<div class="form-group col-sm-6">
+									<label for="txtImagen">Imagen</label>
+									<input class="form-control-file" type="file" id="txtImagen" />
+								</div>
+							</div>
 
-                                <div class="modal-footer">
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-sm" value="Guardar" />
-                                        <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
+							<div class="modal-footer">
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary btn-sm" value="Guardar" />
+									<button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
 
-                            </div>
+						</div>
 
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
-    @section Scripts{
+@section Scripts {
 
-    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
+	<script src="~/vendor/datatables/extensiones/js/dataTables.responsive.min.js"></script>
 
-    <script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
-    <script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
+	<script src="~/vendor/datatables/extensiones/js/dataTables.buttons.min.js"></script>
+	<script src="~/vendor/datatables/extensiones/js/jszip.min.js"></script>
+	<script src="~/vendor/datatables/extensiones/js/buttons.html5.min.js"></script>
+	<script src="~/vendor/datatables/extensiones/js/buttons.print.min.js"></script>
 
 
-    <script src="js/vistas/datatables-demo.js"></script>
-    }
+	<script src="js/vistas/datatables-demo.js"></script>
+}
 

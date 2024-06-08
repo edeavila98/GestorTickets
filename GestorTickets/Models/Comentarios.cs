@@ -7,5 +7,6 @@ namespace GestorTickets.Models
         [Key]
         public int IdComentario { get; set; }
         public string? Comentario { get; set; }
+        public int IdTicket { get; set; }
     }
 }

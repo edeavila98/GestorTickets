@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestorTickets.Models
 {
@@ -14,5 +15,20 @@ namespace GestorTickets.Models
         public int IdEstado { get; set; } = 1;
         //public DateTime FechaCreacion { get; set; }
         public int IdPrioridad { get; set; }
+
+        [ForeignKey("IdCliente")]
+        public Usuario Cliente { get; set; }
+
+        [ForeignKey("IdCategoria")]
+        public Categoria Categoria { get; set; }
+
+        [ForeignKey("IdEmpleado")]
+        public Usuario Empleado { get; set; }
+
+        [ForeignKey("IdEstado")]
+        public Estado Estado { get; set; }
+
+        [ForeignKey("IdPrioridad")]
+        public Prioridad Prioridad { get; set; }
     }
 }

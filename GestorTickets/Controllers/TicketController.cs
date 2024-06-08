@@ -2,16 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.Json;
+using GestorTickets.Services;
+using System.Linq;
 
 namespace GestorTickets.Controllers
 {
     public class TicketController : Controller
     {
         private readonly gestorticketsDbContext _gestorticketsDbContext;
+        private readonly correo _correoService;
 
-        public TicketController(gestorticketsDbContext gestorticketsDbContext)
+        public TicketController(gestorticketsDbContext gestorticketsDbContext, correo correoService)
         {
             _gestorticketsDbContext = gestorticketsDbContext;
+            _correoService = correoService;
         }
 
 
@@ -81,6 +85,36 @@ namespace GestorTickets.Controllers
         {
             _gestorticketsDbContext.Add(nuevoTicket);
             _gestorticketsDbContext.SaveChanges();
+            var ticketDetalles = _gestorticketsDbContext.Tickets
+                               .Where(t => t.IdTicket == nuevoTicket.IdTicket)
+                               .Select(t => new
+                               {
+                                   t.Nombre,
+                                   t.Descripcion,
+                                   t.Cliente.Correo,
+                                   ClienteNombre = t.Cliente.Nombre,
+                                   CategoriaNombre = t.Categoria.NombreCategoria,
+                                   PrioridadNombre = t.Prioridad.NombrePrioridad,
+                                   EstadoNombre = t.Estado.NombreEstado
+                               })
+                               .FirstOrDefault();
+
+            if (ticketDetalles != null)
+            {
+                string destinatario = ticketDetalles.Correo;
+                string asunto = "Nuevo Ticket Creado: " + ticketDetalles.Nombre;
+                string cuerpo = $"Hola {ticketDetalles.ClienteNombre},\n\n" +
+                                $"Se ha creado un nuevo ticket con los siguientes detalles:\n" +
+                                $"Nombre: {ticketDetalles.Nombre}\n" +
+                                $"Descripción: {ticketDetalles.Descripcion}\n" +
+                                $"Categoría: {ticketDetalles.CategoriaNombre}\n" +
+                                $"Prioridad: {ticketDetalles.PrioridadNombre}\n" +
+                                $"Estado: {ticketDetalles.EstadoNombre}\n\n" +
+                                $"Saludos,\n" +
+                                $"Equipo de Soporte";
+
+                _correoService.enviar(destinatario, asunto, cuerpo);
+            }
             return RedirectToAction("Index");
         }
 

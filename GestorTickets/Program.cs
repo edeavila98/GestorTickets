@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using GestorTickets.Models;
+using GestorTickets.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<gestorticketsDbContext>(opt =>
         builder.Configuration.GetConnectionString("stringDbConnection")
         )
 );
+
+builder.Services.AddScoped<correo>(); // Registro del servicio correo
 
 builder.Services.AddSession(options =>
 {

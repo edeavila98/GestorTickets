@@ -75,7 +75,5 @@ namespace GestorTickets.Controllers
             return RedirectToAction("Index");
         }
 
-        
-
     }
 }

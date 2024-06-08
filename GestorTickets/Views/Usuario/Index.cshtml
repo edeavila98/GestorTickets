@@ -20,7 +20,15 @@
         <div class="row">
             <div class="col-sm-3">
                 <button class="btn btn-success" data-toggle="modal" data-target="#modalData"><i class="fas fa-user-plus"></i> Nuevo Usuario</button>
+                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalData2">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalData3">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
             </div>
+           
+
         </div>
         <hr />
         <div class="row">
@@ -28,33 +36,27 @@
                 <table class="table table-bordered" id="tbdata" cellspacing="0" style="width:100%">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
                             <th>Estado</th>
                             <th>Telefono</th>
                             <th>Rol</th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var Usuario in (IEnumerable<dynamic>)ViewData["listadoDeRol"])
                         {
                             <tr>
+                                <td>@Usuario.ID</td>
                                 <td>@Usuario.Nombre</td>
                                 <td>@Usuario.Apellido</td>
                                 <td>@Usuario.Correo</td>
                                 <td>@Usuario.Estado</td>
                                 <td>@Usuario.Telefono</td>
                                 <td>@Usuario.Rol</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
+           
                             </tr>
                         }
                     </tbody>
@@ -134,6 +136,125 @@
                         </div>
                     </form>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  Modal 2-->
+<div class="modal fade" id="modalData2" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Detalle del Usuario</h6>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <!--  Formulario-->
+                <form asp-action="EliminarUsuario">
+                    <input type="hidden" value="0" id="txtId">
+                    <div class="row">
+                        <div class="col-sm-8">
+
+                            <div class="form-row">
+                                <div class="form-group col-sm-6">
+                                    <label for="cboTicket">ID del Usuario</label>
+                                    @Html.DropDownList("IdUsuario", ViewData["listadoDeUser"] as SelectList, "Seleccione un usuario", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-sm" value="Eliminar" />
+                                    <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--  Modal 3-->
+<div class="modal fade" id="modalData3" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6>Detalle del Usuario</h6>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <!--  Formulario-->
+                <form asp-action="ActualizarUsuario">
+                     <input type="hidden" value="0" id="txtId">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                 <div class="form-group col-sm-6">
+                                    <label for="cboTicket">ID del Usuario</label>
+                                    @Html.DropDownList("IdUsuario", ViewData["listadoDeUser"] as SelectList, "Seleccione un usuario", new { @class = "form-control" })
+                                </div>
+                                <div class="form-row">
+                                        <div class="form-group col-sm-6">
+                                            <label for="txtNombre">Cambiar Nombre</label>
+                                            @Html.TextBox("Nombre","",new {@class="form-control"})
+                                        </div>
+                                         <div class="form-group col-sm-6">
+                                            <label for="txtApellido">Cambiar Apellido</label>
+                                            @Html.TextBox("Apellido","",new {@class="form-control"})
+                                        </div>
+                                </div>
+                                <div class="form-row">
+                                        <div class="form-group col-sm-12">
+                                            <label for="txtCorreo">Cambiar Correo</label>
+                                            @Html.TextBox("Correo","",new{@class="form-control"})
+                                        </div>
+                                </div>
+                                <div class="form-row">
+                                     <div class="form-group col-sm-6">
+                                        <label for="txtClave">Cambiar Clave</label>
+                                         @Html.Password("Clave","", new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="txtEstado">Cambiar Estado</label>
+                                        @Html.TextBox("Estado","",new {@class="form-control"})
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-sm-6">
+                                        <label for="txtTelefono">Cambiar Telefono</label>
+                                        @Html.TextBox("Telefono","",new {@class="form-control"})
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="cboRol">Cambiar Rol</label>
+                                    @Html.DropDownList("IdRol", ViewData["listadoDeRoles"] as SelectList, "Seleccione un rol", new { @class = "form-control" })
+                                    </div>
+                                </div>                        
+
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary btn-sm" value="Actualizar" />
+                                        <button class="btn btn-danger btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

@@ -33,7 +33,6 @@
                                             <th>Empleado</th>
                                             <th>Cliente</th>
                                             <th>Estado</th>
-                                            <th>Fecha</th>
                                             <th>Prioridad</th>
                                         </tr>
                                     </thead>
@@ -46,8 +45,7 @@
                                                 <td>@Tickets.CategoriaNombre</td>
                                                 <td>@Tickets.EmpleadoNombre</td>
                                                 <td>@Tickets.ClienteNombre</td>
-                                                <td>@Tickets.EstadoNombre</td>
-                                                <td>Fecha</td>                                               
+                                                <td>@Tickets.EstadoNombre</td>                                            
                                                 <td>@Tickets.PrioridadNombre</td>
                                             </tr>                                        
                                         }
@@ -92,19 +90,14 @@
                                         @Html.DropDownList("IdEmpleado", ViewData["listadoDeEmpleados"] as SelectList,"Seleccione un empleado",new {@class="form-control"})
                                     </div>
                                 </div>
-                                 <div class="form-row">
+                                 @* <div class="form-row">
                                       <div class="form-group col-sm-6">
                                         <label for="cboEstado">Estado</label>
                                         @Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
                                     </div>
                                     
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="txtImagen">Imagen</label>
-                                        <input class="form-control-file" type="file" id="txtImagen"/>
-                                    </div>
-                                </div>
+                                </div> *@
+                          
 
                                 <div class="modal-footer">
                                     <div class="form-group">
@@ -121,6 +114,8 @@
             </div>
         </div>
     </div>
+
+
 
     @section Scripts{
 

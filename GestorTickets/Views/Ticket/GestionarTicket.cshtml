@@ -48,7 +48,6 @@
                             <th>Empleado</th>
                             <th>Cliente</th>
                             <th>Estado</th>
-                            <th>Fecha</th>
                             <th>Prioridad</th>
                         </tr>
                     </thead>
@@ -64,7 +63,6 @@
                                 <td>@Tickets.EmpleadoNombre</td>
                                 <td>@Tickets.ClienteNombre</td>
                                 <td>@Tickets.EstadoNombre</td>
-                                <td>Fecha</td>
                                 <td>@Tickets.PrioridadNombre</td>
                             </tr>
                         }
@@ -140,18 +138,20 @@
                                     <label for="cboTicket">ID del Ticket</label>
                                     @Html.DropDownList("IdTicket", ViewData["listadoDeTicket1"] as SelectList, "Seleccione un ticket", new { @class = "form-control" })
                                 </div>                                                                
-                                <div class="form-group col-sm-6">
-                                    <label for="cboCategoria">Categoria</label>
-                                    @Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList, "Seleccione una categoria", new { @class = "form-control" })
+                                <div class="form-row">
+                                    <div class="form-group col-sm-12">
+                                        <label for="txtDescripcion">Cambiar Nombre</label>
+                                        @Html.TextBox("Nombre", "", new { @class = "form-control"})
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-12">
-                                    <label for="txtDescripcion">Descripcion</label>
+                                    <label for="txtDescripcion">Cambiar Descripcion</label>
                                     @Html.TextArea("Descripcion", "", new { @class = "form-control", @placeHolder = "Ingrese la descripción" })
                                 </div>
                             </div>
-                            <div class="form-row">
+                               <div class="form-row">
                                 <div class="form-group col-sm-6">
                                     <label for="cboEmpleado">Empleado</label>
                                     @Html.DropDownList("IdEmpleado", ViewData["listadoDeEmpleados"] as SelectList, "Seleccione un empleado", new { @class = "form-control" })
@@ -160,23 +160,29 @@
                                     <label for="cboCliente">Cliente</label>
                                     @Html.DropDownList("IdCliente", ViewData["listadoDeClientes"] as SelectList, "Seleccione un cliente", new { @class = "form-control" })
                                 </div>
-                            </div>
+                            </div> 
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label for="cboPrioridad">Prioridad</label>
-                                    @Html.DropDownList("IdPrioridad", ViewData["listadoDePrioridad"] as SelectList, "Seleccione una prioridad", new { @class = "form-control" })
+                                    <label for="cboCategoria">Cambiar Categoria</label>
+                                    @Html.DropDownList("IdCategoria", ViewData["listadoDeCategorias"] as SelectList, "Seleccione una categoria", new { @class = "form-control" })
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="cboEstado">Estado</label>
+                                    <label for="cboEstado">Cambiar Estado</label>
                                     @Html.DropDownList("IdEstado", ViewData["listadoDeEstados"] as SelectList, "Seleccione un estado", new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
+                                    <label for="cboPrioridad">Cambiar Prioridad</label>
+                                    @Html.DropDownList("IdPrioridad", ViewData["listadoDePrioridad"] as SelectList, "Seleccione una prioridad", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            @* <div class="form-row">
+                                <div class="form-group col-sm-6">
                                     <label for="txtImagen">Imagen</label>
                                     <input class="form-control-file" type="file" id="txtImagen" />
                                 </div>
-                            </div>
+                            </div> *@
 
                             <div class="modal-footer">
                                 <div class="form-group">
